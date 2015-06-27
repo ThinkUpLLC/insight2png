@@ -2,14 +2,14 @@
 
 system = require("system")
 server = require("webserver").create()
-Insight2png = require 'insight2png'
+Insight2png = require './insight2png'
 fs = require('fs')
 
 TU_REGEX = /^tu=.+&u=.+&n=.+&d=.+&s=.+&share=1$/
 TESTER_REGEX = /^headline=.+&body=.+&preview=1$/
 
 if system.args.length < 2 or system.args.length > 3
-  domain = "localhost"
+  domain = "0.0.0.0"
   port = 8080
 else
   domain = system.args[1]
@@ -21,8 +21,9 @@ server.listen "#{domain}:#{port}", (request, response) ->
   response.start = new Date()
   response.log = ''
   if request.url.match /^\/insight/
-    params = decodeURIComponent request.queryString.split()
-    unless params? and (params.match(TU_REGEX)!=null or params.match(TESTER_REGEX)!=null)
+    # params = decodeURIComponent request.queryString.split()
+    params = request.url.split("?")[1]
+    unless params? and (params.match(TU_REGEX)? or params.match(TESTER_REGEX)?)
       return fourOhFour(response, "Not a valid request")
     if params.match TU_REGEX
       tuUser = params.substr(3).split('&')[0]

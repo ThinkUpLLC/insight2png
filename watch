@@ -1,1 +1,1 @@
-coffee -o ./ -w -c src/*.coffee
+coffee -o ./ -w -b -c src/*.coffee
