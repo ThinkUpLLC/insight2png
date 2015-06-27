@@ -24,6 +24,14 @@ That's right, there's fun, too! There's a bookmarklet to generate the image from
 
 I had to move insight2png.coffee to a src dir and compile it to js b/c slimer's coffeescript compiler wasn't handling the new object-ified version of insight2png. If you're developing, just run `./watch` while and edits to insight2png.coffee in the src dir will compile to insight2png.js.
 
+## Troubleshooting
+
+For newer versions of slimerjs and phantomjs, need to run with flag --ssl-protocol=any
+
+`phantomjs|slimerjs --ssl-protocol=any server.js`
+
+I'm not sure why this is, but it seems to be specific to ThinkUp's SSL setup, because it's not necessary for all SSL, e.g., https://google.com.
+
 ## Installation
 
 This is the current configuration of the server:
