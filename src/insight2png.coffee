@@ -153,7 +153,13 @@ module.exports = class Insight2png
         phantom.exit 1
       else
         try
-          size = @getImageDimensions 'img'
+          dimensions = @page.title.match(/(\d+)\s.\s(\d+)\spixels/)
+          if dimensions?[1]? and dimensions[2]?
+            size =
+              width: dimensions[1]
+              height: dimensions[2]
+          else
+            size = @getImageDimensions 'img'
           return @callbacks.error("No image found on page", @response) if @callbacks.error? and !size?
           # below works for phantom, not slimer
           # @page.clipRect =
