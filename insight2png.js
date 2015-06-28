@@ -54,10 +54,10 @@ module.exports = Insight2png = (function() {
       return function() {
         clearTimeout(chartTimeout);
         _this.response.log += "Visualization loaded\n";
-        if (_this.url.match(/weekly_graph$/)) {
+        if (_this.url.match(/weekly_graph/)) {
           return setTimeout(function() {
             return getImage();
-          }, 1500);
+          }, 600);
         } else if (_this.url.match(/insight_tester.+&preview=1/)) {
           return setTimeout(function() {
             return getImage();
