@@ -41,11 +41,10 @@ module.exports = class Insight2png
     @page.onCallback = =>
       clearTimeout chartTimeout
       @response.log += "Visualization loaded\n"
-      # console.log "Visualization loaded"
-      if @url.match /weekly_graph$/
+      if @url.match /weekly_graph/
         setTimeout ->
           getImage()
-        , 1500
+        , 600
       else if @url.match /insight_tester.+&preview=1/
         setTimeout ->
           getImage()
@@ -60,7 +59,6 @@ module.exports = class Insight2png
       @page.reason_url = resourceError.url
     @page.open @url, (status) =>
       if status isnt "success"
-        # console.log "Unable to open URL."
         @response.log += "Unable to open URL: #{@page.reason_url}\n#{@page.reason}\n"
         return @callbacks.error("Unable to open URL", @response) if @callbacks.error?
         phantom.exit 1
@@ -102,7 +100,6 @@ module.exports = class Insight2png
         moreText = ""
       if $('.insight').height() - $('.panel-title').height() < 50
         $('.panel-title').height($('.panel-title').height() + 50)
-      # height = $('.panel-footer').position().top
       height = $('.panel.insight').outerHeight() - 45
       brandContainer = """
         <div style="position:absolute; top: #{height - brandHeightGrowth}px; height: #{40 + brandHeightGrowth}px;background: rgba(0, 0, 0, 0.1);width: 100%;left: 0;right: 0;">  <img class="insight-brand" style="height: 22px; position: absolute; top: 11px; left: 10px;" src="#{brand}">#{moreText}</div>
@@ -167,12 +164,12 @@ module.exports = class Insight2png
           #   left: 0
           #   width: size.width
           #   height: size.height
+
           @page.viewportSize =
             width: size.width
             height: size.height
 
           imgData = @page.renderBase64('png')
-          # @logTime(start)
         catch error
           @response.error = error
         finally
